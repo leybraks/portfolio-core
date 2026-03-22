@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+@theme {
+  --color-fondo: #0a0a0a;
+}
+
+body {
+  background-color: var(--color-fondo);
+  color: #e5e7eb;
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Animación para el carrusel infinito de certificaciones */
+@keyframes infinite-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-infinite-scroll {
+  animation: infinite-scroll 30s linear infinite;
+}
+
+.animate-infinite-scroll:hover {
+  animation-play-state: paused;
+}

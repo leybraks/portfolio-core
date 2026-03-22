@@ -1,0 +1,29 @@
+# --- PYTHON / DJANGO ---
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+db.sqlite3
+/backend/static/
+/backend/media/
+venv/
+env/
+
+# --- NODE / REACT ---
+node_modules/
+/frontend/dist/
+.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- DOCKER ---
+.docker/
+# Si usas volúmenes locales de postgres, ignora la carpeta de data
+postgres_data/
+
+# --- SISTEMA ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

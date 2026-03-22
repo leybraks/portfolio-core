@@ -1,0 +1,37 @@
+services:
+  # 1. El motor de base de datos (PostgreSQL)
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=portafolio_db
+      - POSTGRES_USER=sebastian
+      - POSTGRES_PASSWORD=tu_password_segura
+
+  # 2. Tu cerebro (Django)
+  backend:
+    build: ./backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=postgres://sebastian:tu_password_segura@db:5432/portafolio_db
+
+  # 3. Tu cara (React)
+  frontend:
+    build: ./frontend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+# IMPORTANTE: Esto guarda tus datos en tu disco duro, no solo en la memoria del contenedor
+volumes:
+  postgres_data:
