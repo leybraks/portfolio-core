@@ -36,7 +36,7 @@ function Dashboard() {
   const handleAddTech = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:8000/api/technologies/', { name: newTech });
+      await axios.post('http://163.176.173.160:8000/api/technologies/', { name: newTech });
       setNewTech('');
       fetchData(); // Recargar lista
     } catch (error) { console.error("Error al añadir tecnología", error); }
@@ -55,7 +55,7 @@ function Dashboard() {
     selectedTechs.forEach(techId => formData.append('technologies', techId));
 
     try {
-      await axios.post('http://localhost:8000/api/projects/', formData, {
+      await axios.post('http://163.176.173.160:8000/api/projects/', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setProjectForm({ title: '', description: '', github_link: '', live_link: '' });
@@ -76,7 +76,7 @@ function Dashboard() {
     if (certLogo) formData.append('issuer_logo', certLogo); // Aquí va el logo
 
     try {
-      await axios.post('http://localhost:8000/api/certifications/', formData, {
+      await axios.post('http://163.176.173.160:8000/api/certifications/', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       setCertForm({ name: '', issuer: '', certificate_link: '', date_earned: '' });
