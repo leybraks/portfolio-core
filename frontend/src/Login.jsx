@@ -12,7 +12,7 @@ function Login() {
     e.preventDefault();
     try {
       // Pedimos el Token a Django
-      const response = await axios.post('http://localhost:8000/api/token/', {
+      const response = await axios.post('http://163.176.173.160:8000/api/token/', {
         username,
         password
       });

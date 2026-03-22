@@ -21,10 +21,10 @@ function Dashboard() {
   const navigate = useNavigate();
   // Cargar datos iniciales
   const fetchData = () => {
-    axios.get('http://localhost:8000/api/contact/').then(res => setMessages(res.data)).catch(() => {});
-    axios.get('http://localhost:8000/api/projects/').then(res => setProjects(res.data)).catch(() => {});
-    axios.get('http://localhost:8000/api/technologies/').then(res => setTechnologies(res.data)).catch(() => {});
-    axios.get('http://localhost:8000/api/certifications/').then(res => setCertifications(res.data)).catch(() => {});
+    axios.get('http://163.176.173.160:8000/api/contact/').then(res => setMessages(res.data)).catch(() => {});
+    axios.get('http://163.176.173.160:8000/api/projects/').then(res => setProjects(res.data)).catch(() => {});
+    axios.get('http://163.176.173.160:8000/api/technologies/').then(res => setTechnologies(res.data)).catch(() => {});
+    axios.get('http://163.176.173.160:8000/api/certifications/').then(res => setCertifications(res.data)).catch(() => {});
   };
 
   useEffect(() => {

@@ -33,7 +33,7 @@ function Portfolio() {
   // 2. ENVÍO DE MENSAJES AL INBOX DEL SYSTEM CORE
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8000/api/contact/', formData)
+    axios.post('http://163.176.173.160:8000/api/contact/', formData)
       .then(() => {
         setStatus('Mensaje enviado. Lo revisaré en el System Core.');
         setFormData({ name: '', email: '', message: '' });
