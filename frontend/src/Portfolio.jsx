@@ -12,11 +12,11 @@ function Portfolio() {
   // 1. CARGAMOS TUS DATOS REALES DE POSTGRESQL
   useEffect(() => {
     // Si la base de datos está vacía o el servidor apagado, capturamos el error para que la página no se rompa
-    axios.get('http://localhost:8000/api/projects/')
+    axios.get('http://163.176.173.160:8000/api/projects/')
       .then(res => setProjects(res.data))
       .catch(err => console.error("Error cargando proyectos:", err));
       
-    axios.get('http://localhost:8000/api/certifications/')
+    axios.get('http://163.176.173.160:8000/api/certifications/')
       .then(res => setCertifications(res.data))
       .catch(err => console.error("Error cargando certificaciones:", err));
     
