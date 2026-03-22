@@ -158,7 +158,7 @@ function Portfolio() {
                 <div key={index} className="flex flex-col items-center justify-center min-w-[200px] md:min-w-[250px] mx-8 group">
                   <a href={cert.certificate_link} target="_blank" rel="noreferrer" className="flex flex-col items-center justify-center w-full">
                     {cert.issuer_logo ? (
-                      <img src={`http://163.176.173.160:8000${cert.issuer_logo}`} alt={cert.issuer} className="h-12 md:h-16 object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 mb-4" />
+                      <img src={cert.issuer_logo} alt={cert.issuer} className="h-12 md:h-16 object-contain grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 mb-4" />
                     ) : (
                       <div className="h-12 md:h-16 flex items-center justify-center font-black text-lg md:text-xl text-gray-600 uppercase tracking-widest mb-4 group-hover:text-white transition-colors">{cert.issuer}</div>
                     )}
