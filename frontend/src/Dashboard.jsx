@@ -318,14 +318,17 @@ function Dashboard() {
         )}
         {activeTab === 'JOB HUNTER' && (
           <div className="animate-in fade-in duration-500">
-            <h2 className="text-3xl font-black uppercase mb-8 text-blue-500 italic">IA Hunter Core</h2>
+            <h2 className="text-3xl font-black uppercase mb-8 text-blue-500 italic tracking-tighter">IA Hunter Core</h2>
             <div className="bg-[#0a0a0a] border border-white/5 rounded-3xl overflow-hidden shadow-2xl">
-              <table className="w-full text-left text-[11px]">
+              <table className="w-full text-left text-[10px]">
                 <thead className="bg-white/5 font-black uppercase tracking-[0.2em] text-gray-500">
                   <tr>
-                    <th className="p-5">Puesto & Empresa</th>
+                    <th className="p-5">Detalles de Vacante</th>
+                    <th className="p-5">Ubicación</th>
                     <th className="p-5">IA Match</th>
+                    <th className="p-5">Estado</th>
                     <th className="p-5">Skills Clave</th>
+                    <th className="p-5">Última Vista</th>
                     <th className="p-5">Acción</th>
                   </tr>
                 </thead>
@@ -333,24 +336,39 @@ function Dashboard() {
                   {jobs.map(job => (
                     <tr key={job.vacante_id} className="hover:bg-blue-600/5 transition-colors group">
                       <td className="p-5">
-                        <p className="font-black text-white uppercase text-sm">{job.puesto}</p>
-                        <p className="text-gray-500 font-bold">{job.empresa} — {job.ubicacion}</p>
+                        <p className="text-blue-400 font-mono text-[9px] mb-1">ID: {job.vacante_id}</p>
+                        <p className="font-black text-white uppercase text-sm leading-none mb-1">{job.puesto}</p>
+                        <p className="text-gray-500 font-bold uppercase tracking-widest">{job.empresa}</p>
+                      </td>
+                      <td className="p-5">
+                        <span className="text-gray-400 uppercase font-black">{job.ubicacion}</span>
                       </td>
                       <td className="p-5">
                         <div className="flex items-center gap-3">
-                          <div className="w-20 h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                          <div className="w-16 h-1 bg-gray-800 rounded-full overflow-hidden">
                             <div 
-                              className={`h-full transition-all duration-1000 ${job.probabilidad_ia > 0.7 ? 'bg-green-500' : 'bg-yellow-500'}`} 
+                              className={`h-full transition-all duration-1000 ${job.probabilidad_ia > 0.7 ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]' : 'bg-yellow-500'}`} 
                               style={{ width: `${job.probabilidad_ia * 100}%` }}
                             ></div>
                           </div>
-                          <span className="font-black text-blue-400">{(job.probabilidad_ia * 100).toFixed(0)}%</span>
+                          <span className="font-black text-white">{(job.probabilidad_ia * 100).toFixed(0)}%</span>
                         </div>
                       </td>
-                      <td className="p-5 text-gray-400 font-mono leading-relaxed">{job.habilidades_ia}</td>
                       <td className="p-5">
-                        <a href={job.link} target="_blank" rel="noreferrer" className="bg-white text-black px-4 py-2 rounded-full font-black uppercase text-[9px] hover:bg-blue-600 hover:text-white transition-all">
-                          Apply Now
+                        <span className={`px-3 py-1 rounded-full font-black text-[8px] uppercase tracking-tighter ${job.estado === 'Postulado' ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-blue-500/10 text-blue-500 border border-blue-500/20'}`}>
+                          {job.estado || 'Pendiente'}
+                        </span>
+                      </td>
+                      <td className="p-5 max-w-[200px]">
+                        <p className="text-gray-400 font-mono leading-relaxed line-clamp-2">{job.habilidades_ia}</p>
+                      </td>
+                      <td className="p-5">
+                        <p className="text-gray-600 font-mono">{new Date(job.ultima_vista).toLocaleDateString()}</p>
+                        <p className="text-gray-800 font-mono text-[9px]">{new Date(job.ultima_vista).toLocaleTimeString()}</p>
+                      </td>
+                      <td className="p-5">
+                        <a href={job.link} target="_blank" rel="noreferrer" className="inline-block bg-white text-black px-4 py-2 rounded-full font-black uppercase text-[9px] hover:bg-blue-600 hover:text-white transition-all shadow-lg hover:shadow-blue-600/20">
+                          Postular →
                         </a>
                       </td>
                     </tr>
