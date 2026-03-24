@@ -31,7 +31,18 @@ services:
       - "5173:5173"
     depends_on:
       - backend
-
+  n8n:
+      image: docker.n8n.io/n8nio/n8n
+      container_name: n8n_silva
+      restart: always
+      ports:
+        - "5678:5678"
+      volumes:
+        - n8n_data:/home/node/.n8n
+      environment:
+        - N8N_ENFORCEMENT_AGREEMENT=true
+        - GENERIC_TIMEZONE=America/Lima # Para que ejecute los cron en tu hora local
 # IMPORTANTE: Esto guarda tus datos en tu disco duro, no solo en la memoria del contenedor
 volumes:
   postgres_data:
+  n8n_data:
