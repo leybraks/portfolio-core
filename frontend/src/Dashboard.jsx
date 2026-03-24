@@ -180,16 +180,22 @@ function Dashboard() {
         <h1 className="text-2xl font-black tracking-tighter uppercase mb-12">SILVA<span className="text-blue-600">_OS</span></h1>
         
         <nav className="flex flex-col gap-4 flex-grow">
-          {['MÉTRICAS', 'PROYECTOS', 'CERTIFICACIONES', 'TECNOLOGÍAS', 'PERFIL','JOB HUNTER'].map(tab => (
-            <button 
-              key={tab}
-              onClick={() => { setActiveTab(tab); resetForms(); }}
-              className={`text-left text-xs font-black uppercase tracking-widest py-3 px-4 rounded transition-all ${activeTab === tab ? 'bg-blue-600 text-white' : 'text-gray-500 hover:bg-white/5 hover:text-white'}`}
-            >
-              {tab}
-            </button>
-          ))}
-        </nav>
+        {['MÉTRICAS', 'PROYECTOS', 'CERTIFICACIONES', 'TECNOLOGÍAS', 'PERFIL', 'JOB HUNTER'].map(tab => (
+          <button 
+            key={tab}
+            onClick={() => { 
+              setActiveTab(tab); 
+              resetForms();
+              // --- LIMPIEZA TÁCTICA ---
+              setCurrentPage(1); // Siempre regresamos a la página 1
+              setFilterProb('TODAS'); // Siempre mostramos todo al entrar
+            }}
+            className={`text-left text-xs font-black uppercase tracking-widest py-3 px-4 rounded transition-all ${activeTab === tab ? 'bg-blue-600 text-white shadow-[0_0_15px_rgba(37,99,235,0.3)]' : 'text-gray-500 hover:bg-white/5 hover:text-white'}`}
+          >
+            {tab}
+          </button>
+        ))}
+      </nav>
 
         <button 
             onClick={() => {
