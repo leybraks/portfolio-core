@@ -3,7 +3,7 @@ from .models import Project, Technology, ContactMessage , Certification , JobOpp
 from .serializers import ProjectSerializer, TechnologySerializer,ContactSerializer , CertificationSerializer , JobOpportunitySerializer , ProfileSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions,status
 class TechnologyViewSet(viewsets.ModelViewSet):
     queryset = Technology.objects.all()
     serializer_class = TechnologySerializer
@@ -30,10 +30,38 @@ class CertificationViewSet(viewsets.ModelViewSet):
 class JobOpportunityListCreate(generics.ListCreateAPIView):
     queryset = JobOpportunity.objects.all().order_by('-probabilidad_ia')
     serializer_class = JobOpportunitySerializer
-    
-    # IMPORTANTE: Por ahora lo dejamos en AllowAny para que n8n pueda enviar datos sin bloqueos.
-    # Más adelante, cuando el dominio esté listo, le pondremos seguridad por Token.
     permission_classes = [permissions.AllowAny]
+
+    # Interceptamos la petición POST de n8n
+    def create(self, request, *args, **kwargs):
+        vacante_id = request.data.get('vacante_id')
+
+        if vacante_id:
+            # Separamos el ID del resto de los datos que se van a actualizar
+            defaults = {key: value for key, value in request.data.items() if key != 'vacante_id'}
+
+            # --- BLINDAJE EXTRA (Opcional pero recomendado) ---
+            # Si tú ya marcaste este trabajo como "POSTULADO" en tu panel, 
+            # evitamos que n8n lo sobreescriba y lo regrese a "Pendiente" o "ACTIVO".
+            if JobOpportunity.objects.filter(vacante_id=vacante_id, estado='Postulado').exists():
+                defaults.pop('estado', None)
+
+            # La magia de Django: Busca el ID. Si lo encuentra, actualiza con 'defaults'. Si no, lo crea.
+            job, created = JobOpportunity.objects.update_or_create(
+                vacante_id=vacante_id,
+                defaults=defaults
+            )
+
+            serializer = self.get_serializer(job)
+
+            # Le respondemos a n8n: 201 si es nuevo, 200 si solo lo actualizamos
+            return Response(
+                serializer.data, 
+                status=status.HTTP_201_CREATED if created else status.HTTP_200_OK
+            )
+
+        # Si por alguna razón n8n no manda ID, dejamos que Django maneje el error normalmente
+        return super().create(request, *args, **kwargs)
 
 class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
