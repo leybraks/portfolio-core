@@ -42,11 +42,15 @@ function Dashboard() {
     }).catch(() => {});
   };
   // 1. Filtrar los trabajos
-  const filteredJobs = jobs.filter(job => 
-    filterProb === 'TODAS' || job.probabilidad_ia === filterProb
-  );
+  // 1. Filtrar los trabajos (Blindado contra mayúsculas/minúsculas)
+  const filteredJobs = jobs.filter(job => {
+    if (filterProb === 'TODAS') return true;
+    
+    // Convertimos ambos a mayúsculas antes de comparar
+    return job.probabilidad_ia?.toUpperCase() === filterProb.toUpperCase();
+  });
 
-  // 2. Calcular paginación
+  // 2. Calcular paginación (Esto se mantiene igual, está perfecto)
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentJobs = filteredJobs.slice(indexOfFirstItem, indexOfLastItem);
