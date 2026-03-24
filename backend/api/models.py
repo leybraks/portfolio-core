@@ -58,6 +58,6 @@ class JobOpportunity(models.Model):
     ultima_vista = models.DateTimeField(auto_now_add=True)
     habilidades_ia = models.TextField()  # Aquí guardamos el texto de la IA
     probabilidad_ia = models.FloatField() # Valor entre 0 y 1 (ej: 0.85)
-
+    estado = models.CharField(max_length=50, default="Pendiente")
     def __str__(self):
         return f"{self.puesto} @ {self.empresa}"
