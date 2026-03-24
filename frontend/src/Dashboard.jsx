@@ -41,13 +41,16 @@ function Dashboard() {
         if(res.data.length > 0) setProfile(res.data[0]);
     }).catch(() => {});
   };
-  // 1. Filtrar los trabajos
-  // 1. Filtrar los trabajos (Blindado contra mayúsculas/minúsculas)
+  // 1. Filtrar los trabajos (Blindado contra nulos y mayúsculas)
   const filteredJobs = jobs.filter(job => {
+    // Si el filtro es TODAS, dejamos pasar este trabajo
     if (filterProb === 'TODAS') return true;
     
-    // Convertimos ambos a mayúsculas antes de comparar
-    return job.probabilidad_ia?.toUpperCase() === filterProb.toUpperCase();
+    // AQUÍ ADENTRO extraemos y limpiamos la probabilidad de ESTE trabajo específico
+    const prob = job.probabilidad_ia ? job.probabilidad_ia.toString().toUpperCase() : "";
+    
+    // Comparamos
+    return prob === filterProb.toUpperCase();
   });
 
   // 2. Calcular paginación (Esto se mantiene igual, está perfecto)
