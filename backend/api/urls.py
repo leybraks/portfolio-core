@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ProjectViewSet, TechnologyViewSet , ContactViewSet  , CertificationViewSet    
+from .views import ProjectViewSet, TechnologyViewSet , ContactViewSet  , CertificationViewSet        
+from .views import ProfileView
 from .views import JobOpportunityListCreate
 # El router crea automáticamente todas las rutas necesarias (GET, POST, PUT, DELETE)
 router = DefaultRouter()
@@ -11,5 +12,5 @@ router.register(r'certifications', CertificationViewSet)
 urlpatterns = [
     path('', include(router.urls)),
     path('jobs/', JobOpportunityListCreate.as_view(), name='job-list-create'),
-
+    path('profile/', ProfileView.as_view(), name='profile'),
 ]
