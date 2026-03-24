@@ -345,13 +345,19 @@ function Dashboard() {
                       </td>
                       <td className="p-5">
                         <div className="flex items-center gap-3">
-                          <div className="w-16 h-1 bg-gray-800 rounded-full overflow-hidden">
-                            <div 
-                              className={`h-full transition-all duration-1000 ${job.probabilidad_ia > 0.7 ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]' : 'bg-yellow-500'}`} 
-                              style={{ width: `${job.probabilidad_ia * 100}%` }}
-                            ></div>
-                          </div>
-                          <span className="font-black text-white">{(job.probabilidad_ia * 100).toFixed(0)}%</span>
+                          {/* Evaluamos el texto de la IA en lugar de hacer matemáticas */}
+                          <span className={`px-4 py-1 rounded-full font-black text-[9px] uppercase tracking-tighter border 
+                            ${job.probabilidad_ia === 'ALTA' 
+                              ? 'bg-green-500/10 text-green-500 border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.1)]' 
+                              : job.probabilidad_ia === 'MEDIA' 
+                              ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/30' 
+                              : 'bg-red-500/10 text-red-500 border-red-500/30'}`}>
+                            
+                            {/* Icono de pulso solo para las ALTA */}
+                            {job.probabilidad_ia === 'ALTA' && <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse mr-2"></span>}
+                            
+                            {job.probabilidad_ia}
+                          </span>
                         </div>
                       </td>
                       <td className="p-5">
