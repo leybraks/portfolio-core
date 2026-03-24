@@ -57,7 +57,7 @@ class JobOpportunity(models.Model):
     link = models.URLField(max_length=500)
     ultima_vista = models.DateTimeField(auto_now_add=True)
     habilidades_ia = models.TextField()  # Aquí guardamos el texto de la IA
-    probabilidad_ia = models.FloatField() # Valor entre 0 y 1 (ej: 0.85)
+    probabilidad_ia = models.CharField(max_length=20, default='MEDIA')
     estado = models.CharField(max_length=50, default="Pendiente")
     def __str__(self):
         return f"{self.puesto} @ {self.empresa}"
