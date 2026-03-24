@@ -315,7 +315,50 @@ function Dashboard() {
             </div>
           </div>
         )}
-
+        {activeTab === 'JOB HUNTER' && (
+          <div className="animate-in fade-in duration-500">
+            <h2 className="text-3xl font-black uppercase mb-8 text-blue-500 italic">IA Hunter Core</h2>
+            <div className="bg-[#0a0a0a] border border-white/5 rounded-3xl overflow-hidden shadow-2xl">
+              <table className="w-full text-left text-[11px]">
+                <thead className="bg-white/5 font-black uppercase tracking-[0.2em] text-gray-500">
+                  <tr>
+                    <th className="p-5">Puesto & Empresa</th>
+                    <th className="p-5">IA Match</th>
+                    <th className="p-5">Skills Clave</th>
+                    <th className="p-5">Acción</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5">
+                  {jobs.map(job => (
+                    <tr key={job.vacante_id} className="hover:bg-blue-600/5 transition-colors group">
+                      <td className="p-5">
+                        <p className="font-black text-white uppercase text-sm">{job.puesto}</p>
+                        <p className="text-gray-500 font-bold">{job.empresa} — {job.ubicacion}</p>
+                      </td>
+                      <td className="p-5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-20 h-1.5 bg-gray-800 rounded-full overflow-hidden">
+                            <div 
+                              className={`h-full transition-all duration-1000 ${job.probabilidad_ia > 0.7 ? 'bg-green-500' : 'bg-yellow-500'}`} 
+                              style={{ width: `${job.probabilidad_ia * 100}%` }}
+                            ></div>
+                          </div>
+                          <span className="font-black text-blue-400">{(job.probabilidad_ia * 100).toFixed(0)}%</span>
+                        </div>
+                      </td>
+                      <td className="p-5 text-gray-400 font-mono leading-relaxed">{job.habilidades_ia}</td>
+                      <td className="p-5">
+                        <a href={job.link} target="_blank" rel="noreferrer" className="bg-white text-black px-4 py-2 rounded-full font-black uppercase text-[9px] hover:bg-blue-600 hover:text-white transition-all">
+                          Apply Now
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
         {/* PESTAÑA TECNOLOGÍAS */}
         {activeTab === 'TECNOLOGÍAS' && (
           <div className="animate-in fade-in duration-500 max-w-md">
