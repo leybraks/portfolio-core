@@ -51,18 +51,22 @@ function Portfolio() {
 
       {/* NAVEGACIÓN */}
       <nav className="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-xl border-b border-white/5 px-8 py-5 flex justify-between items-center">
-        <Link to="/panel" className="font-black tracking-tighter text-2xl uppercase hover:text-blue-500 transition-colors" title="Acceso al System Core">
+        <Link to="/panel" className="font-black tracking-tighter text-2xl uppercase hover:text-blue-500 transition-colors">
           SILVA<span className="text-blue-600">.</span>
         </Link>
-        <div className="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 items-center">
-          <a href="#trayectoria" className="hover:text-white transition-colors">{t.nav_trayectoria}</a>
-          <a href="#proyectos" className="hover:text-white transition-colors">{t.nav_proyectos}</a>
-          <a href="#contacto" className="hover:text-white transition-colors">{t.nav_contacto}</a>
+        
+        <div className="flex items-center gap-4"> {/* Contenedor para botones visibles siempre */}
+          <div className="hidden md:flex gap-8 text-[10px] font-bold uppercase tracking-[0.3em] text-gray-500 mr-4">
+            <a href="#trayectoria" className="hover:text-white transition-colors">{t.nav_trayectoria}</a>
+            <a href="#proyectos" className="hover:text-white transition-colors">{t.nav_proyectos}</a>
+            <a href="#contacto" className="hover:text-white transition-colors">{t.nav_contacto}</a>
+          </div>
+          
           <button 
             onClick={toggleLang}
-            className="text-[10px] font-black px-3 py-1 border border-white/20 rounded-full hover:bg-white hover:text-black transition-all text-white"
+            className="text-[9px] md:text-[10px] font-black px-3 py-1 border border-white/20 rounded-full hover:bg-white hover:text-black transition-all text-white bg-white/5"
           >
-            {lang === 'es' ? 'ENGLISH' : 'ESPAÑOL'}
+            {lang === 'es' ? 'EN' : 'ES'}
           </button>
         </div>
       </nav>

@@ -40,3 +40,11 @@ class Certification(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.issuer}"
+
+
+class Profile(models.Model):
+    status_es = models.CharField(max_length=150, default="Disponible para proyectos")
+    status_en = models.CharField(max_length=150, default="Available for projects")
+
+    def __str__(self):
+        return "Configuración Global del Sitio"
