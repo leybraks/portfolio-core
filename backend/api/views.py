@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .models import Project, Technology, ContactMessage , Certification , JobOpportunity
-from .serializers import ProjectSerializer, TechnologySerializer,ContactSerializer , CertificationSerializer , JobOpportunitySerializer
+from .models import Project, Technology, ContactMessage , Certification , JobOpportunity, Profile
+from .serializers import ProjectSerializer, TechnologySerializer,ContactSerializer , CertificationSerializer , JobOpportunitySerializer , ProfileSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import generics, permissions
@@ -33,4 +33,9 @@ class JobOpportunityListCreate(generics.ListCreateAPIView):
     
     # IMPORTANTE: Por ahora lo dejamos en AllowAny para que n8n pueda enviar datos sin bloqueos.
     # Más adelante, cuando el dominio esté listo, le pondremos seguridad por Token.
+    permission_classes = [permissions.AllowAny]
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
     permission_classes = [permissions.AllowAny]
