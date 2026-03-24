@@ -159,7 +159,7 @@ function Dashboard() {
         <h1 className="text-2xl font-black tracking-tighter uppercase mb-12">SILVA<span className="text-blue-600">_OS</span></h1>
         
         <nav className="flex flex-col gap-4 flex-grow">
-          {['MÉTRICAS', 'PROYECTOS', 'CERTIFICACIONES', 'TECNOLOGÍAS', 'PERFIL'].map(tab => (
+          {['MÉTRICAS', 'PROYECTOS', 'CERTIFICACIONES', 'TECNOLOGÍAS', 'PERFIL','JOB HUNTER'].map(tab => (
             <button 
               key={tab}
               onClick={() => { setActiveTab(tab); resetForms(); }}
