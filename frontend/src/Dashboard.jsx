@@ -377,7 +377,45 @@ function Dashboard() {
                 <tbody className="divide-y divide-white/5">
                   {currentJobs.map(job => (
                     <tr key={job.vacante_id} className="hover:bg-blue-600/5 transition-colors group">
-                      {/* ... (Contenido de tu fila que ya tienes) ... */}
+                      <td className="p-5">
+                        <p className="text-blue-400 font-mono text-[9px] mb-1">ID: {job.vacante_id}</p>
+                        <p className="font-black text-white uppercase text-sm leading-none mb-1">{job.puesto}</p>
+                        <p className="text-gray-500 font-bold uppercase tracking-widest">{job.empresa}</p>
+                      </td>
+                      <td className="p-5">
+                        <span className="text-gray-400 uppercase font-black">{job.ubicacion}</span>
+                      </td>
+                      <td className="p-5">
+                        <div className="flex items-center gap-3">
+                          <span className={`px-4 py-1 rounded-full font-black text-[9px] uppercase tracking-tighter border 
+                            ${job.probabilidad_ia?.toUpperCase() === 'ALTA' 
+                              ? 'bg-green-500/10 text-green-500 border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.1)]' 
+                              : job.probabilidad_ia?.toUpperCase() === 'MEDIA' 
+                              ? 'bg-yellow-500/10 text-yellow-500 border-yellow-500/30' 
+                              : 'bg-red-500/10 text-red-500 border-red-500/30'}`}>
+                            
+                            {job.probabilidad_ia?.toUpperCase() === 'ALTA' && <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse mr-2"></span>}
+                            {job.probabilidad_ia || 'Desconocida'}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="p-5">
+                        <span className={`px-3 py-1 rounded-full font-black text-[8px] uppercase tracking-tighter ${job.estado === 'Postulado' ? 'bg-green-500/10 text-green-500 border border-green-500/20' : 'bg-blue-500/10 text-blue-500 border border-blue-500/20'}`}>
+                          {job.estado || 'ACTIVO'}
+                        </span>
+                      </td>
+                      <td className="p-5 max-w-[200px]">
+                        <p className="text-gray-400 font-mono leading-relaxed line-clamp-2">{job.habilidades_ia}</p>
+                      </td>
+                      <td className="p-5">
+                        <p className="text-gray-600 font-mono">{new Date(job.ultima_vista).toLocaleDateString()}</p>
+                        <p className="text-gray-800 font-mono text-[9px]">{new Date(job.ultima_vista).toLocaleTimeString()}</p>
+                      </td>
+                      <td className="p-5">
+                        <a href={job.link} target="_blank" rel="noreferrer" className="inline-block bg-white text-black px-4 py-2 rounded-full font-black uppercase text-[9px] hover:bg-blue-600 hover:text-white transition-all shadow-lg hover:shadow-blue-600/20">
+                          Postular →
+                        </a>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
