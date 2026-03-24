@@ -48,3 +48,16 @@ class Profile(models.Model):
 
     def __str__(self):
         return "Configuración Global del Sitio"
+    
+class JobOpportunity(models.Model):
+    vacante_id = models.CharField(max_length=100, unique=True)
+    empresa = models.CharField(max_length=150)
+    puesto = models.CharField(max_length=150)
+    ubicacion = models.CharField(max_length=150)
+    link = models.URLField(max_length=500)
+    ultima_vista = models.DateTimeField(auto_now_add=True)
+    habilidades_ia = models.TextField()  # Aquí guardamos el texto de la IA
+    probabilidad_ia = models.FloatField() # Valor entre 0 y 1 (ej: 0.85)
+
+    def __str__(self):
+        return f"{self.puesto} @ {self.empresa}"

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, Technology ,ContactMessage, Certification
+from .models import Project, Technology ,ContactMessage, Certification, JobOpportunity
 
 class TechnologySerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,4 +27,9 @@ class ContactSerializer(serializers.ModelSerializer):
 class CertificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Certification
+        fields = '__all__'
+
+class JobOpportunitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = JobOpportunity
         fields = '__all__'

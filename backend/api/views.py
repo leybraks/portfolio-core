@@ -1,9 +1,9 @@
 from rest_framework import viewsets
-from .models import Project, Technology, ContactMessage , Certification
-from .serializers import ProjectSerializer, TechnologySerializer,ContactSerializer , CertificationSerializer
+from .models import Project, Technology, ContactMessage , Certification , JobOpportunity
+from .serializers import ProjectSerializer, TechnologySerializer,ContactSerializer , CertificationSerializer , JobOpportunitySerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
+from rest_framework import generics, permissions
 class TechnologyViewSet(viewsets.ModelViewSet):
     queryset = Technology.objects.all()
     serializer_class = TechnologySerializer
@@ -26,3 +26,11 @@ class ContactViewSet(viewsets.ModelViewSet):
 class CertificationViewSet(viewsets.ModelViewSet):
     queryset = Certification.objects.all().order_by('-date_earned') # Los más recientes primero
     serializer_class = CertificationSerializer
+
+class JobOpportunityListCreate(generics.ListCreateAPIView):
+    queryset = JobOpportunity.objects.all().order_by('-probabilidad_ia')
+    serializer_class = JobOpportunitySerializer
+    
+    # IMPORTANTE: Por ahora lo dejamos en AllowAny para que n8n pueda enviar datos sin bloqueos.
+    # Más adelante, cuando el dominio esté listo, le pondremos seguridad por Token.
+    permission_classes = [permissions.AllowAny]
