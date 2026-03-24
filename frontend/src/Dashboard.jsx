@@ -6,7 +6,7 @@ function Dashboard() {
   const [activeTab, setActiveTab] = useState('PROYECTOS');
   const [isEditing, setIsEditing] = useState(false);
   const [editId, setEditId] = useState(null);
-
+  const [jobs, setJobs] = useState([]);
   // Estados para almacenar la data de la base de datos
   const [messages, setMessages] = useState([]);
   const [projects, setProjects] = useState([]);
@@ -34,6 +34,7 @@ function Dashboard() {
     axios.get(`${API_URL}/projects/`).then(res => setProjects(res.data)).catch(() => {});
     axios.get(`${API_URL}/technologies/`).then(res => setTechnologies(res.data)).catch(() => {});
     axios.get(`${API_URL}/certifications/`).then(res => setCertifications(res.data)).catch(() => {});
+    axios.get(`${API_URL}/jobs/`).then(res => setJobs(res.data)).catch(() => {});
     axios.get(`${API_URL}/profile/`).then(res => {
         if(res.data.length > 0) setProfile(res.data[0]);
     }).catch(() => {});
