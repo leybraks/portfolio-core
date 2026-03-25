@@ -175,7 +175,7 @@ function Dashboard() {
       alert(isEditing ? "Certificación actualizada" : "Certificación guardada");
     } catch (error) { console.error("Error en certificación", error); }
   };
-  console.log(jobs)
+
   return (
     <div className="min-h-screen bg-[#020202] text-white flex flex-col md:flex-row font-sans selection:bg-blue-600">
       {selectedJob && (
