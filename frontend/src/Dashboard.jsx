@@ -16,6 +16,7 @@ function Dashboard() {
   const [filterProb, setFilterProb] = useState('TODAS'); // Filtro: TODAS, ALTA, MEDIA, BAJA
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6; // Cuántos trabajos ver por página
+  const [selectedJob, setSelectedJob] = useState(null); // Para guardar el trabajo seleccionado
   // Estados para los formularios
   const [newTech, setNewTech] = useState('');
   const [projectForm, setProjectForm] = useState({ title: '', description: '', github_link: '', live_link: '' });
@@ -174,10 +175,90 @@ function Dashboard() {
       alert(isEditing ? "Certificación actualizada" : "Certificación guardada");
     } catch (error) { console.error("Error en certificación", error); }
   };
-
+  
   return (
     <div className="min-h-screen bg-[#020202] text-white flex flex-col md:flex-row font-sans selection:bg-blue-600">
-      
+      {selectedJob && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="bg-[#0a0a0a] border border-white/10 w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl animate-in fade-in zoom-in duration-300">
+            
+            {/* HEADER: Título y Botón Cerrar */}
+            <div className="p-6 border-b border-white/5 flex justify-between items-start">
+              <div>
+                <h2 className="text-2xl font-black uppercase text-white tracking-tighter italic">
+                  {selectedJob.puesto}
+                </h2>
+                <p className="text-blue-500 font-bold uppercase text-[10px] tracking-[0.2em]">
+                  @ {selectedJob.empresa}
+                </p>
+              </div>
+              <button 
+                onClick={() => setSelectedJob(null)}
+                className="text-white/40 hover:text-white transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+              </button>
+            </div>
+
+            {/* CUERPO: Detalles */}
+            <div className="p-6 max-h-[60vh] overflow-y-auto custom-scrollbar">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-[11px] font-bold uppercase tracking-widest">
+                <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+                  <span className="text-gray-500 block mb-1">📍 UBICACIÓN</span>
+                  <span className="text-white">{selectedJob.ciudad || 'Lima, PE'}</span>
+                </div>
+                <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+                  <span className="text-gray-500 block mb-1">💰 SALARIO ESTIMADO</span>
+                  <span className="text-green-500">{selectedJob.salario || 'No especificado'}</span>
+                </div>
+                <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+                  <span className="text-gray-500 block mb-1">🌐 PORTAL DE ORIGEN</span>
+                  <span className="text-blue-400">
+                      {selectedJob.link?.includes('linkedin') ? 'LINKEDIN' : 
+                      selectedJob.link?.includes('bumeran') ? 'BUMERAN' : 'COMPUTRABAJO'}
+                  </span>
+                </div>
+                <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+                  <span className="text-gray-500 block mb-1">⚡ PROBABILIDAD IA</span>
+                  <span className="text-white">{selectedJob.probabilidad_ia}</span>
+                </div>
+              </div>
+
+              {/* TECNOLOGÍAS (Mapeadas de Gemini) */}
+              <div className="mb-8">
+                <h3 className="text-[10px] font-black text-gray-500 mb-3 tracking-[0.3em]">STACK REQUERIDO</h3>
+                <div className="flex flex-wrap gap-2">
+                  {(selectedJob.tecnologias || 'SQL, Python, Excel').split(',').map(tech => (
+                    <span key={tech} className="bg-blue-600/10 text-blue-500 border border-blue-600/20 px-3 py-1 rounded-full text-[9px] font-black">
+                      {tech.trim().toUpperCase()}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* DESCRIPCIÓN */}
+              <div>
+                <h3 className="text-[10px] font-black text-gray-500 mb-3 tracking-[0.3em]">DESCRIPCIÓN DEL PUESTO</h3>
+                <p className="text-gray-400 text-xs leading-relaxed font-medium">
+                  {selectedJob.descripcion}
+                </p>
+              </div>
+            </div>
+
+            {/* FOOTER: Botón Postular */}
+            <div className="p-6 bg-white/5 border-t border-white/5 flex gap-4">
+              <a 
+                href={selectedJob.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex-1 bg-blue-600 hover:bg-blue-500 text-white text-center py-4 rounded-xl font-black uppercase text-[11px] tracking-widest transition-all shadow-lg shadow-blue-600/20"
+              >
+                POSTULAR AHORA
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
       {/* SIDEBAR */}
       <aside className="w-full md:w-64 bg-black border-r border-white/5 p-8 flex flex-col">
         <h1 className="text-2xl font-black tracking-tighter uppercase mb-12">SILVA<span className="text-blue-600">_OS</span></h1>
@@ -379,7 +460,7 @@ function Dashboard() {
                 </thead>
                 <tbody className="divide-y divide-white/5">
                   {currentJobs.map(job => (
-                    <tr key={job.vacante_id} className="hover:bg-blue-600/5 transition-colors group">
+                    <tr key={job.vacante_id} onClick={() => setSelectedJob(job)} className="hover:bg-blue-600/5 transition-colors group">
                       <td className="p-5">
                         <p className="text-blue-400 font-mono text-[9px] mb-1">ID: {job.vacante_id}</p>
                         <p className="font-black text-white uppercase text-sm leading-none mb-1">{job.puesto}</p>
