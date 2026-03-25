@@ -203,26 +203,33 @@ function Dashboard() {
             {/* CUERPO: Detalles */}
             <div className="p-6 max-h-[60vh] overflow-y-auto custom-scrollbar">
               
-              {/* GRID DE INFO BÁSICA */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-[11px] font-bold uppercase tracking-widest">
+              {/* GRID DE INFO BÁSICA EXPANDIDA */}
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 text-[10px] font-bold uppercase tracking-widest">
                 <div className="bg-white/5 p-4 rounded-xl border border-white/5">
                   <span className="text-gray-500 block mb-1">📍 UBICACIÓN</span>
                   <span className="text-white">{selectedJob.ciudad || 'Lima, PE'}</span>
                 </div>
                 <div className="bg-white/5 p-4 rounded-xl border border-white/5">
-                  <span className="text-gray-500 block mb-1">💰 SALARIO ESTIMADO</span>
-                  <span className="text-green-500">{selectedJob.salario || 'No especificado'}</span>
-                </div>
-                <div className="bg-white/5 p-4 rounded-xl border border-white/5">
-                  <span className="text-gray-500 block mb-1">🌐 PORTAL DE ORIGEN</span>
-                  <span className="text-blue-400">
-                      {selectedJob.link?.includes('linkedin') ? 'LINKEDIN' : 
-                      selectedJob.link?.includes('bumeran') ? 'BUMERAN' : 'COMPUTRABAJO'}
+                  <span className="text-gray-500 block mb-1">💼 MODALIDAD</span>
+                  <span className={selectedJob.modalidad === 'Remoto' ? 'text-purple-400' : 'text-white'}>
+                    {selectedJob.modalidad || 'Presencial'}
                   </span>
                 </div>
                 <div className="bg-white/5 p-4 rounded-xl border border-white/5">
-                  <span className="text-gray-500 block mb-1">⚡ PROBABILIDAD IA</span>
-                  <span className="text-white">{selectedJob.probabilidad_ia}</span>
+                  <span className="text-gray-500 block mb-1">⏱️ TIPO</span>
+                  <span className="text-white">{selectedJob.tipo_empleo || 'Tiempo Completo'}</span>
+                </div>
+                <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+                  <span className="text-gray-500 block mb-1">💰 SALARIO</span>
+                  <span className="text-green-500">{selectedJob.salario || 'No especificado'}</span>
+                </div>
+                <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+                  <span className="text-gray-500 block mb-1">🌐 ORIGEN</span>
+                  <span className="text-blue-400">{selectedJob.portal_origen || 'Web'}</span>
+                </div>
+                <div className="bg-white/5 p-4 rounded-xl border border-white/5">
+                  <span className="text-gray-500 block mb-1">📅 PUBLICADO</span>
+                  <span className="text-orange-400">{selectedJob.tiempo_publicado || 'Reciente'}</span>
                 </div>
               </div>
 
