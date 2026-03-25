@@ -202,6 +202,8 @@ function Dashboard() {
 
             {/* CUERPO: Detalles */}
             <div className="p-6 max-h-[60vh] overflow-y-auto custom-scrollbar">
+              
+              {/* GRID DE INFO BÁSICA */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-[11px] font-bold uppercase tracking-widest">
                 <div className="bg-white/5 p-4 rounded-xl border border-white/5">
                   <span className="text-gray-500 block mb-1">📍 UBICACIÓN</span>
@@ -224,6 +226,48 @@ function Dashboard() {
                 </div>
               </div>
 
+              {/* GAP ANALYSIS & MATCH SCORE (NUEVO) */}
+              <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                {/* EL MATCH SCORE */}
+                <div className="bg-white/5 border border-white/10 p-5 rounded-2xl">
+                  <h3 className="text-[10px] font-black text-gray-500 mb-3 tracking-[0.3em] flex justify-between">
+                    <span>COMPATIBILIDAD CON TU PERFIL</span>
+                    <span className="text-blue-500">{selectedJob.match_score || 0}%</span>
+                  </h3>
+                  <div className="w-full bg-black rounded-full h-3 border border-white/10 overflow-hidden">
+                    <div 
+                      className={`h-3 rounded-full transition-all duration-1000 ${
+                        (selectedJob.match_score || 0) >= 80 ? 'bg-green-500 shadow-[0_0_10px_#22c55e]' : 
+                        (selectedJob.match_score || 0) >= 50 ? 'bg-yellow-500 shadow-[0_0_10px_#eab308]' : 
+                        'bg-red-500 shadow-[0_0_10px_#ef4444]'
+                      }`}
+                      style={{ width: `${selectedJob.match_score || 0}%` }}
+                    ></div>
+                  </div>
+                </div>
+
+                {/* SKILLS FALTANTES */}
+                <div className="bg-white/5 border border-white/10 p-5 rounded-2xl">
+                  <h3 className="text-[10px] font-black text-gray-500 mb-3 tracking-[0.3em]">
+                    GAP ANALYSIS (FALTANTE)
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {(!selectedJob.skills_faltantes || selectedJob.skills_faltantes === 'Ninguna') ? (
+                      <span className="text-green-500 text-xs font-black uppercase tracking-widest">
+                        ✅ Tienes el stack completo
+                      </span>
+                    ) : (
+                      selectedJob.skills_faltantes.split(',').map(skill => (
+                        <span key={skill} className="bg-red-600/10 text-red-500 border border-red-600/20 px-3 py-1 rounded-full text-[9px] font-black">
+                          ❌ {skill.trim().toUpperCase()}
+                        </span>
+                      ))
+                    )}
+                  </div>
+                </div>
+              </div>
+
               {/* TECNOLOGÍAS (Mapeadas de Gemini) */}
               <div className="mb-8">
                 <h3 className="text-[10px] font-black text-gray-500 mb-3 tracking-[0.3em]">STACK REQUERIDO</h3>
@@ -239,8 +283,8 @@ function Dashboard() {
               {/* DESCRIPCIÓN */}
               <div>
                 <h3 className="text-[10px] font-black text-gray-500 mb-3 tracking-[0.3em]">DESCRIPCIÓN DEL PUESTO</h3>
-                <p className="text-gray-400 text-xs leading-relaxed font-medium">
-                  {selectedJob.descripcion}
+                <p className="text-gray-400 text-xs leading-relaxed font-medium whitespace-pre-wrap">
+                  {selectedJob.descripcion || 'Descripción no disponible.'}
                 </p>
               </div>
             </div>
@@ -555,6 +599,7 @@ function Dashboard() {
               ))}
             </div>
           </div>
+          
         )}
 
       </main>
