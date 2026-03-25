@@ -59,5 +59,8 @@ class JobOpportunity(models.Model):
     habilidades_ia = models.TextField()  # Aquí guardamos el texto de la IA
     probabilidad_ia = models.CharField(max_length=20, default='MEDIA')
     estado = models.CharField(max_length=50, default="Pendiente")
+    match_score = models.IntegerField(null=True, blank=True)
+    skills_faltantes = models.TextField(null=True, blank=True)
+    descripcion = models.TextField(null=True, blank=True)
     def __str__(self):
         return f"{self.puesto} @ {self.empresa}"
