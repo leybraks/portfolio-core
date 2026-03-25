@@ -279,7 +279,7 @@ function Dashboard() {
               <div className="mb-8">
                 <h3 className="text-[10px] font-black text-gray-500 mb-3 tracking-[0.3em]">STACK REQUERIDO</h3>
                 <div className="flex flex-wrap gap-2">
-                  {(selectedJob.tecnologias || 'SQL, Python, Excel').split(',').map(tech => (
+                  {(selectedJob.habilidades_ia || 'SQL, Python, Excel').split(',').map(tech => (
                     <span key={tech} className="bg-blue-600/10 text-blue-500 border border-blue-600/20 px-3 py-1 rounded-full text-[9px] font-black">
                       {tech.trim().toUpperCase()}
                     </span>
@@ -291,7 +291,7 @@ function Dashboard() {
               <div>
                 <h3 className="text-[10px] font-black text-gray-500 mb-3 tracking-[0.3em]">DESCRIPCIÓN DEL PUESTO</h3>
                 <p className="text-gray-400 text-xs leading-relaxed font-medium whitespace-pre-wrap">
-                  {selectedJob.descripcion || 'Descripción no disponible.'}
+                  {selectedJob.descripcion || selectedJob.job_description || selectedJob.description || 'Descripción no disponible.'}
                 </p>
               </div>
             </div>
