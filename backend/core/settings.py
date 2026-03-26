@@ -26,10 +26,20 @@ SECRET_KEY = 'django-insecure-w4(a1mtywe4rbgvqy65ja0q#_&s1im&ob+0e-4^y032uwb)9r^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '163.176.173.160', 'backend']
-
-
+ALLOWED_HOSTS = [
+    'silvadata.me',
+    'www.silvadata.me',
+    '163.176.173.160',
+    'localhost',
+    '127.0.0.1',
+    'backend'
+]
 # Application definition
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://silvadata.me',
+    'https://www.silvadata.me'
+]
 
 INSTALLED_APPS = [
     'jazzmin',
