@@ -15,11 +15,11 @@ function Portfolio() {
   const [status, setStatus] = useState('');
 
   useEffect(() => {
-    axios.get('http://163.176.173.160:8000/api/projects/')
+    axios.get('/api/projects/')
       .then(res => setProjects(res.data))
       .catch(err => console.error("Error cargando proyectos:", err));
       
-    axios.get('http://163.176.173.160:8000/api/certifications/')
+    axios.get('/api/certifications/')
       .then(res => setCertifications(res.data))
       .catch(err => console.error("Error cargando certificaciones:", err));
     
@@ -34,7 +34,7 @@ function Portfolio() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://163.176.173.160:8000/api/contact/', formData)
+    axios.post('/api/contact/', formData)
       .then(() => {
         setStatus(t.contact_success);
         setFormData({ name: '', email: '', message: '' });

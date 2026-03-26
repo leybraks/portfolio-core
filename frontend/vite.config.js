@@ -9,6 +9,10 @@ export default defineConfig({
   ],
   server: {
     host: true, // Esto es vital para que Vite funcione dentro de Docker
-    allowedHosts: ['silvadata.me'] // La llave mágica para tu dominio
+    allowedHosts: ['silvadata.me'], // La llave mágica para tu dominio
+    hmr: {
+      host: 'silvadata.me',
+      protocol: 'wss' // Fuerza a usar WebSocket Seguro
+    }
   }
 })
