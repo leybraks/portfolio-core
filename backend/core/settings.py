@@ -205,3 +205,10 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Asegúrate de que estas variables estén así para que use el dominio correcto
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
