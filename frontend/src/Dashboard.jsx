@@ -29,7 +29,7 @@ function Dashboard() {
   const navigate = useNavigate();
 
   // URL Base para no repetir
-  const API_URL = 'http://163.176.173.160:8000/api';
+  const API_URL = '/api';
 
   // Cargar datos iniciales
   const fetchData = () => {
