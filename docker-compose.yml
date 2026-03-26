@@ -24,6 +24,13 @@ services:
   # 3. Tu cara (React)
   frontend:
     build: ./frontend
+    restart: always
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=400
+    deploy:
+      resources:
+        limits:
+          memory: 512M
     volumes:
       - ./frontend:/app
       - /app/node_modules
