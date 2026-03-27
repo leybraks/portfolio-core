@@ -63,12 +63,12 @@ services:
       - WEBHOOK_URL=https://silvadata.me/n8n/
       - N8N_EDITOR_BASE_URL=https://silvadata.me/n8n/
       # AÑADE ESTAS LÍNEAS PARA CONECTAR A POSTGRES:
-      - DB_TYPE=postgresdb
-      - DB_POSTGRESDB_HOST=db
-      - DB_POSTGRESDB_PORT=5432
-      - DB_POSTGRESDB_DATABASE=portafolio_db
-      - DB_POSTGRESDB_USER=sebastian
-      - DB_POSTGRESDB_PASSWORD=tu_password_segura
+      #- DB_TYPE=postgresdb
+      #- DB_POSTGRESDB_HOST=db
+      #- DB_POSTGRESDB_PORT=5432
+      #- DB_POSTGRESDB_DATABASE=portafolio_db
+      #- DB_POSTGRESDB_USER=sebastian
+      #- DB_POSTGRESDB_PASSWORD=tu_password_segura
     depends_on:
       - db
 
