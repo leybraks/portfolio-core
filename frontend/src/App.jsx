@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Portfolio from './Portfolio';
 import Dashboard from './Dashboard';
 import Login from './Login';
-
+import Chatbot from './chatbot-page/Chatbot';
 // Este componente envuelve tus rutas privadas
 const ProtectedRoute = ({ children }) => {
   // Verificamos si tienes la llave (token) guardada
@@ -24,8 +24,8 @@ function App() {
         {/* PÚBLICO */}
         <Route path="/" element={<Portfolio />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/chatbot" element={<Chatbot />} />
 
-        {/* PRIVADO (INTRANET) */}
         <Route 
           path="/panel" 
           element={
