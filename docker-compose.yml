@@ -53,9 +53,6 @@ services:
       - "5678:5678"
     volumes:
       - n8n_data:/home/node/.n8n
-    depends_on:
-      db:
-        condition: service_healthy   # ← FIX 3: n8n también espera a db
     environment:
       - N8N_ENFORCEMENT_AGREEMENT=true
       - GENERIC_TIMEZONE=America/Lima
@@ -65,13 +62,15 @@ services:
       - N8N_PATH=/n8n/
       - WEBHOOK_URL=https://silvadata.me/n8n/
       - N8N_EDITOR_BASE_URL=https://silvadata.me/n8n/
-      # ← FIX 4: decirle a n8n qué base de datos usar
+      # AÑADE ESTAS LÍNEAS PARA CONECTAR A POSTGRES:
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=db
       - DB_POSTGRESDB_PORT=5432
       - DB_POSTGRESDB_DATABASE=portafolio_db
       - DB_POSTGRESDB_USER=sebastian
       - DB_POSTGRESDB_PASSWORD=tu_password_segura
+    depends_on:
+      - db
 
   # 5. El Portero (Nginx)
   nginx:
