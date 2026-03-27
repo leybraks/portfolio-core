@@ -49,7 +49,7 @@ services:
       - GENERIC_TIMEZONE=America/Lima
       - N8N_HOST=silvadata.me
       - N8N_PROTOCOL=https
-      - N8N_PORT=5678  # <--- CAMBIADO: Antes estaba en 443
+      - N8N_PORT=5678        # <--- OJO: Debe ser 5678
       - N8N_PATH=/n8n/
       - WEBHOOK_URL=https://silvadata.me/n8n/
       - N8N_EDITOR_BASE_URL=https://silvadata.me/n8n/
