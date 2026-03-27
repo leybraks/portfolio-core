@@ -8,16 +8,16 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
-    host: true, // Esto es vital para que Vite funcione dentro de Docker
-    allowedHosts: ['silvadata.me'], // La llave mágica para tu dominio
+    host: true,
+    allowedHosts: ['frontend', 'silvadata.me', 'localhost'],
     watch: {
       usePolling: true,
-      interval: 1000, // Revisa cambios cada segundo, no al instante
-      ignored: ['**/node_modules/**', '**/.git/**'] // No vigiles estas carpetas pesadas
+      interval: 1000,
+      ignored: ['**/node_modules/**', '**/.git/**']
     },
     hmr: {
       host: 'silvadata.me',
-      protocol: 'wss' // Fuerza a usar WebSocket Seguro
+      protocol: 'wss'
     }
   }
 })
