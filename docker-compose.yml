@@ -1,5 +1,4 @@
 services:
-  # 1. El motor de base de datos (PostgreSQL)
   db:
     image: postgres:15
     volumes:
@@ -8,8 +7,13 @@ services:
       - POSTGRES_DB=portafolio_db
       - POSTGRES_USER=sebastian
       - POSTGRES_PASSWORD=tu_password_segura
+    # ← FIX 1: Agregar healthcheck para que otros servicios esperen
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sebastian -d portafolio_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
-  # 2. Tu cerebro (Django)
   backend:
     build: ./backend
     volumes:
@@ -17,7 +21,8 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+      db:
+        condition: service_healthy   # ← FIX 2: espera que db esté sana
     environment:
       - DATABASE_URL=postgres://sebastian:tu_password_segura@db:5432/portafolio_db
 
@@ -48,6 +53,9 @@ services:
       - "5678:5678"
     volumes:
       - n8n_data:/home/node/.n8n
+    depends_on:
+      db:
+        condition: service_healthy   # ← FIX 3: n8n también espera a db
     environment:
       - N8N_ENFORCEMENT_AGREEMENT=true
       - GENERIC_TIMEZONE=America/Lima
@@ -57,6 +65,13 @@ services:
       - N8N_PATH=/n8n/
       - WEBHOOK_URL=https://silvadata.me/n8n/
       - N8N_EDITOR_BASE_URL=https://silvadata.me/n8n/
+      # ← FIX 4: decirle a n8n qué base de datos usar
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=db
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=portafolio_db
+      - DB_POSTGRESDB_USER=sebastian
+      - DB_POSTGRESDB_PASSWORD=tu_password_segura
 
   # 5. El Portero (Nginx)
   nginx:
