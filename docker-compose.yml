@@ -39,17 +39,23 @@ services:
     depends_on:
       - backend
   n8n:
-      image: docker.n8n.io/n8nio/n8n
-      container_name: n8n_silva
-      restart: always
-      ports:
-        - "5678:5678"
-      volumes:
-        - n8n_data:/home/node/.n8n
-      environment:
-        - N8N_ENFORCEMENT_AGREEMENT=true
-        - GENERIC_TIMEZONE=America/Lima # Para que ejecute los cron en tu hora local
-# IMPORTANTE: Esto guarda tus datos en tu disco duro, no solo en la memoria del contenedor
+    image: docker.n8n.io/n8nio/n8n
+    container_name: n8n_silva
+    restart: always
+    ports:
+      - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
+    environment:
+      - N8N_ENFORCEMENT_AGREEMENT=true
+      - GENERIC_TIMEZONE=America/Lima
+      - N8N_HOST=silvadata.me
+      - N8N_PROTOCOL=https
+      - N8N_PORT=5678
+      - N8N_PATH=/n8n/
+      - WEBHOOK_URL=https://silvadata.me/n8n/
+      - N8N_EDITOR_BASE_URL=https://silvadata.me/n8n/
+
   nginx:
       image: nginx:latest
       ports:
