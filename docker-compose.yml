@@ -1,113 +1,79 @@
 services:
-
   # 1. El motor de base de datos (PostgreSQL)
-
   db:
-
     image: postgres:15
-
     volumes:
-
       - postgres_data:/var/lib/postgresql/data
-
     environment:
-
       - POSTGRES_DB=portafolio_db
-
       - POSTGRES_USER=sebastian
-
       - POSTGRES_PASSWORD=tu_password_segura
 
-
-
   # 2. Tu cerebro (Django)
-
   backend:
-
     build: ./backend
-
     volumes:
-
       - ./backend:/app
-
     ports:
-
       - "8000:8000"
-
     depends_on:
-
       - db
-
     environment:
-
       - DATABASE_URL=postgres://sebastian:tu_password_segura@db:5432/portafolio_db
 
-
-
   # 3. Tu cara (React)
-
   frontend:
-
     build: ./frontend
-
     restart: always
-
     environment:
-
       - NODE_OPTIONS=--max-old-space-size=400
-
     deploy:
-
       resources:
-
         limits:
-
           memory: 512M
-
     volumes:
-
       - ./frontend:/app
-
       - /app/node_modules
-
     ports:
-
       - "5173:5173"
-
     depends_on:
-
       - backend
 
+  # 4. Silva-OS (n8n) - AQUÍ ESTABA EL ERROR DE ESPACIOS
   n8n:
-
-
-
     image: docker.n8n.io/n8nio/n8n
-
     container_name: n8n_silva
-
     restart: always
-
     ports:
-
       - "5678:5678"
-
     volumes:
-
       - n8n_data:/home/node/.n8n
-
     environment:
-
       - N8N_ENFORCEMENT_AGREEMENT=true
-
       - GENERIC_TIMEZONE=America/Lima
-
       - N8N_HOST=silvadata.me
-
       - N8N_PROTOCOL=https
-
       - N8N_PORT=5678
-
       - N8N_PATH=/n8n/
-
       - WEBHOOK_URL=https://silvadata.me/n8n/
+      - N8N_EDITOR_BASE_URL=https://silvadata.me/n8n/
+
+  # 5. El Portero (Nginx)
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - ./backend/media:/app/media:ro
+    depends_on:
+      - frontend
+      - backend
+      - n8n
+
+# VITAL: Definir los volúmenes fuera de 'services'
+volumes:
+  postgres_data:
+  n8n_data:
