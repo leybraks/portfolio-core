@@ -42,12 +42,14 @@ services:
     restart: always
     ports:
       - "5678:5678"
+    volumes:
+      - n8n_data:/home/node/.n8n
     environment:
       - N8N_ENFORCEMENT_AGREEMENT=true
       - GENERIC_TIMEZONE=America/Lima
       - N8N_HOST=silvadata.me
       - N8N_PROTOCOL=https
-      - N8N_PORT=5678        # <--- OBLIGATORIO: 5678
+      - N8N_PORT=5678        # <--- Debe coincidir con el puerto del proxy_pass
       - N8N_PATH=/n8n/
       - WEBHOOK_URL=https://silvadata.me/n8n/
       - N8N_EDITOR_BASE_URL=https://silvadata.me/n8n/
